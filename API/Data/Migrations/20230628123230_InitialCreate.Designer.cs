@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace API.Data.migration
+namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230627192317_InitialCreate")]
+    [Migration("20230628123230_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -32,12 +32,18 @@ namespace API.Data.migration
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<byte[]>("PasswordHash")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Useres");
+                    b.ToTable("Users");
                 });
 #pragma warning restore 612, 618
         }
